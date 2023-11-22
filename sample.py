@@ -1,6 +1,7 @@
 '''
 This is a collection of random functions that uses different datatypes
-where each function utilizes a different data type.
+where each function utilizes a different data type. This also includes
+python concepts such as sequential execution.
 '''
 
 def get_student_info(): # Sample Containers - Tuples
@@ -12,31 +13,32 @@ def get_student_info(): # Sample Containers - Tuples
 print(f"Student Info: {get_student_info()}")
 
 def add_shopping_list(item): # Sample Containers - Lists
-    shopping_list = ["bread", "eggs", "milk", item]
+    shoppingList = ["bread", "eggs", "milk", "flour", "baking powder", "sniffing powder",
+                     "rat poison", "gin", "rum", item]
     print("The current shopping list is: ", end=" ")
-    print(", ".join(shopping_list))
+    print(", ".join(shoppingList))
 
 add_shopping_list("bananas")
 
 def combine_sets(set1, set2): # Sample Containers - Sets
-    union_set = set1.union(set2)
-    print(f"Union of the first and second set: {union_set}")
+    unionSet = set1.union(set2)
+    print(f"Union of the first and second set: {unionSet}")
 
-odd_set = {1, 3, 5, 7, 9}
-even_set = {0, 2, 4, 6, 8}
-print(combine_sets(odd_set, even_set))
+oddSet = {1, 3, 5, 7, 9}
+evenSet = {0, 2, 4, 6, 8}
+print(combine_sets(oddSet, evenSet))
 
 def get_game_developers(): # Sample Containers - Dictionaries
-    game_developers = {
-        "Pokemon": "Game Freak",
+    gameDevelopers = {
+        "Pokemon": "Game Freak", 
         "Minecraft": "Mojang",
         "Honkai: Star Rail": "Hoyoverse",
         "Animal Crossing": "Nintendo",
         "Spider-Man": "Marvel"
     }
 
-    del game_developers["Spider-Man"]
-    return game_developers
+    del gameDevelopers["Spider-Man"]
+    return gameDevelopers
 
 def pretty_print(dictionary): # Iterates the values of game_developer dictionary
     for key, value in dictionary.items():
