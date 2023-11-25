@@ -1,3 +1,12 @@
+#pylint: disable=C0114
+#pylint: disable=W0401
+#pylint: disable=C0103
+#pylint: disable=C0116
+#pylint: disable=W0613
+#pylint: disable=W0603
+#pylint: disable=W0602
+#pylint: disable=C0114
+#pylint: disable=W0614
 # Sample Containers - Tuples
 def get_student_info():
     name = "March"
