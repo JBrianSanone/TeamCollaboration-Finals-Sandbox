@@ -18,8 +18,8 @@ def get_student_info():
     return name, age, grade  # returns a tuple
 
 
-print(f"Student Info: {get_student_info()}")
-
+def test_tuples():
+    print(f"Student Info: {get_student_info()}")
 
 # Sample Containers - Lists
 def add_shopping_list(item):
