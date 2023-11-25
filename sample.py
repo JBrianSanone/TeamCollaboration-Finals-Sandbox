@@ -63,7 +63,7 @@ print_order()
 
 
 # Sample Control Structure - Conditional
-def check_number(num):
+def check_number(num):#This checks you out hottie
     if num is None:
         return 'is None'
     elif num < 0:
@@ -79,7 +79,7 @@ print(number, check_number(number))
 
 
 # Sample Control Structure - Iterative While Loop
-def print_winters():
+def print_winters(): #Ngayong alam mo na ang mga malalamig na months, gawin ko nang mainit buhay mo
     winter = ["December", "January", "February"]
 
     i = 0
@@ -89,7 +89,7 @@ def print_winters():
 
 
 print_winters()
-
+print(8==@ rosas)
 
 # Sample Control Structure - Iterative For Loop
 def find_factorial(num):
