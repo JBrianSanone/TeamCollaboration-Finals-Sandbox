@@ -7,6 +7,9 @@
 #pylint: disable=W0602
 #pylint: disable=C0114
 #pylint: disable=W0614
+#pylint: disable=C0305
+#pylint: disable=R1705
+
 # Sample Containers - Tuples
 def get_student_info():
     name = "March"
