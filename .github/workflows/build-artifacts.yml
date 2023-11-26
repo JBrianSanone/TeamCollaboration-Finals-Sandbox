@@ -1,0 +1,28 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Run tests
+      run: python -m unittest discover
+
+    - name: Archive artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: calculator-art
+        path: src/
