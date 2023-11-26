@@ -1,12 +1,4 @@
-#pylint: disable=C0114
-#pylint: disable=W0401
-#pylint: disable=C0103
-#pylint: disable=C0116
-#pylint: disable=W0613
-#pylint: disable=W0603
-#pylint: disable=W0602
-#pylint: disable=C0114
-#pylint: disable=W0614
+#pylint: disable=C0114, W0401, C0103, C0116, W0613, W0603, W0602, C0114, W0614
 
 
 class Calculator:
