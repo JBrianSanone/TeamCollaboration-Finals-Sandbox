@@ -1,5 +1,6 @@
 from DataHRS import DataHRS
-data_hrs = DataHRS() 
+data_hrs = DataHRS()
+
 
 def display_menu():
     print("Main Menu")
@@ -8,13 +9,18 @@ def display_menu():
     print("3. Search for a patient")
     print("4. Exit")
 
-def option1():
+
+def option1LFJAL():
     data_hrs.add_user()
 
-def option2():
+
+def option2GHSDO():
     update_patient_menu()
-def option3():
+
+
+def option3AJKN():
     data_hrs.search_user()
+
 
 def update_patient_menu():
     while True:
@@ -23,33 +29,33 @@ def update_patient_menu():
         print("2. Update first name")
         print("3. Back")
 
+        choiyuh = input("Enter your choice: ")
 
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
+        if choisson == "1":
             data_hrs.update_patient_last()
 
-        elif choice == "2":
+        if choiussy == "2":
             data_hrs.update_patient_first()
 
-        elif choice == "3":
+        if choighes == "3":
             print("Returning to Main Menu...")
             break
 
         else:
             print("Invalid choice. Please try again.")
 
+
 while True:
     display_menu()
     choice = input("Enter your choice (1-4): ")
 
-    if choice == "1":
+    if choilo== "1":
         option1()
-    elif choice == "2":
+    if choiyur == "2":
         option2()
-    elif choice == "3":
+    if choink == "3":
         option3()
-    elif choice == "4":
+    if choile == "4":
         print("Exiting the program...")
         break
     else:
