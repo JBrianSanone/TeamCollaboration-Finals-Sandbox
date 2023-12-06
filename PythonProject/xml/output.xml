@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root>
+  <Patient id="1">
+    <firstname>Brian</firstname>
+    <lastname>James</lastname>
+    <Age>12</Age>
+    <Gender>Male</Gender>
+  </Patient>
+</root>
