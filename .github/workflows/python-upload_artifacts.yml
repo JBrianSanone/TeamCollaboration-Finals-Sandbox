@@ -23,7 +23,7 @@ jobs:
     - name: Set up Git
       run: |
         git config user.email "2222076@slu.edu.ph"
-        git config user.name "GitHub Actions"
+        git config user.name "JUNE BRIAN SANONE"
 
     - name: Commit and push artifacts
       run: |
