@@ -1,0 +1,30 @@
+name: Build and Archive Artifact
+
+on:
+  workflow_run:
+    workflows: ["Python Testing"]
+    types:
+      - completed
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.12
+
+    - name: Set artifact name
+      id: set_artifact_name
+      run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
+      
+    - name: Archive artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.ARTIFACT_NAME }}
+        path: src/
