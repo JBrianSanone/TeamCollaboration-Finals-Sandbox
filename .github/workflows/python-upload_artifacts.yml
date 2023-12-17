@@ -17,7 +17,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        run-name: ${{ needs.build.outputs.artifact_name }}
+        name: ${{ needs.build.outputs.artifact_name }}
         path: artifact/
       
     - name: Set up Git
