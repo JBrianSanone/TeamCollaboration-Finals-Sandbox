@@ -17,7 +17,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{ github.event.workflow_run.name }}-Build and Archive Artifact-${{ needs.archive.outputs.ARTIFACT_NAME }}
         path: artifacts/
       
     - name: Commit and push artifacts
