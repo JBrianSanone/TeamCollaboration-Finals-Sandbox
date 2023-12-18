@@ -42,7 +42,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: ${{ needs.archive.outputs.ARTIFACT_NAME }}
-        path: ./downloaded-artifacts/
+        path: ./artifact
 
     - name: Commit and push artifacts
       run: |
