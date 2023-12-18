@@ -71,7 +71,7 @@ class DataHRS:
 
   def update_patient_last(self):
     while True:
-      patient_id = str(input("Enter the patient ID (Enter stop to exit): ")
+      patient_id = str(input("Enter the patient ID (Enter stop to exit): "))
 
       if patient_id.lower() == 'stop':
         break
