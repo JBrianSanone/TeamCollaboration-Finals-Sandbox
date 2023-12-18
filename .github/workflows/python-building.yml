@@ -48,6 +48,10 @@ jobs:
       with:
         python-version: 3.12
 
+    - name: Wait for artifacts to be available
+      run: sleep 10s
+
+
     - name: Set artifact name for download
       id: set_artifact_name_download
       run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
