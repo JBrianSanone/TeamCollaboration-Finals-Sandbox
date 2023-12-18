@@ -21,12 +21,18 @@ jobs:
 
     - name: Set artifact name
       id: set_artifact_name
-      run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
+      run: |
+        echo "Creating artifact..."
+        echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}"
+        echo "Content of artifact folder:"
+        ls -R
+        echo "::set-output name=ARTIFACT_NAME::finals-art-${{ github.run_number }}"
       
     - name: Archive artifact
-      uses: actions/upload-artifact@v4
+      id: upload-artifact
+      uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{ steps.set_artifact_name.outputs.ARTIFACT_NAME }}
         path: ./artifact
 
   upload:
@@ -36,13 +42,19 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+
+    - name: List artifacts before download
+      run: ls -R
 
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
         name: ${{ needs.archive.outputs.ARTIFACT_NAME }}
-        path: ./artifact
+        path: ./downloaded-artifacts
+
+    - name: List downloaded artifacts
+      run: ls -R ./downloaded-artifacts
 
     - name: Commit and push artifacts
       run: |
