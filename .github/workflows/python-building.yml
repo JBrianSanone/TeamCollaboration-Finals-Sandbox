@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ env.ARTIFACT_NAME }}
-        path: src/
+        path: ./artifacts
   
   download:
     name: Download artifact for testing
@@ -39,7 +39,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{ needs.archive.outputs.ARTIFACT_NAME }}
 
     - name: Test artifact
       run: ls -R
