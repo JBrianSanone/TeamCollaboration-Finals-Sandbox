@@ -62,9 +62,9 @@ jobs:
       run: echo "Artifact name for download is ${{ needs.archive.outputs.artifactName }}"
 
     - name: Download artifact
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
-        name: ${{ needs.archive.outputs.artifactName }}
+        name: ${{ env.artifactName }}
         path: src/
 
     - name: Test artifact
