@@ -1,7 +1,7 @@
 import unittest
 import io
 from unittest.mock import patch, mock_open
-from DataHRS import DataHRS
+from src.DataHRS import src.DataHRS
 
 class TestDataHRS(unittest.TestCase):
 
