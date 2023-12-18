@@ -1,8 +1,6 @@
 import unittest
-import os
 import io
-from lxml import etree
-from unittest.mock import patch
+from unittest.mock import patch, mock_open
 from DataHRS import DataHRS
 
 class TestDataHRS(unittest.TestCase):
@@ -11,37 +9,35 @@ class TestDataHRS(unittest.TestCase):
         # Create an instance of DataHRS for testing
         self.data_hrs = DataHRS()
 
-        with open("xml/output.xml", "w") as f:
-            f.write("""<?xml version='1.0' encoding='UTF-8'?>
-                        <root>
-                          <Patient id="1">
-                            <firstname>Brian</firstname>
-                            <lastname>James</lastname>
-                            <Age>12</Age>
-                            <Gender>Male</Gender>
-                          </Patient>
-                        </root>""")
+        # Mock the file content for testing
+        self.mock_file_content = """<?xml version='1.0' encoding='UTF-8'?>
+                                    <root>
+                                      <Patient id="1">
+                                        <firstname>Brian</firstname>
+                                        <lastname>James</lastname>
+                                        <Age>12</Age>
+                                        <Gender>Male</Gender>
+                                      </Patient>
+                                    </root>"""
+
+        # Patch the open function to mock file writing
+        self.mock_open_patch = patch('builtins.open', mock_open(read_data=self.mock_file_content))
+        self.mock_open_patch.start()
 
     def tearDown(self):
         # Clean up any changes made during testing
-        if os.path.exists("xml/output.xml"):
-            os.remove("xml/output.xml")
+        self.mock_open_patch.stop()
 
     def test_add_user(self):
         input_data = ['John', 'Doe', '25', 'Male']
         with unittest.mock.patch('builtins.input', side_effect=input_data):
             self.data_hrs.add_user()
 
-        # Verify that the XML file has been updated
-        tree = etree.parse("xml/output.xml")
-        root = tree.getroot()
-        self.assertEqual(len(root), 2)  # Assuming there were already 1 patient in the XML
-        new_patient = root[-1]
-        self.assertEqual(new_patient.get('id'), '2')
-        self.assertEqual(new_patient.find('firstname').text, 'John')
-        self.assertEqual(new_patient.find('lastname').text, 'Doe')
-        self.assertEqual(new_patient.find('Age').text, '25')
-        self.assertEqual(new_patient.find('Gender').text, 'Male')
+        # Verify that the mock file content has been updated
+        expected_content = f"{self.mock_file_content}\n  <Patient id=\"2\">\n    <firstname>John</firstname>\n    <lastname>Doe</lastname>\n    <Age>25</Age>\n    <Gender>Male</Gender>\n  </Patient>\n</root>"
+        with open("xml/output.xml", "r") as f:
+            actual_content = f.read()
+        self.assertEqual(actual_content, expected_content)
 
     def test_search_user(self):
         input_data = ['1', 'stop']
@@ -59,11 +55,19 @@ class TestDataHRS(unittest.TestCase):
         with patch('builtins.input', side_effect=['1', 'John', 'stop']):
             self.data_hrs.update_patient_first()
 
-        # Verify that the XML file has been updated
-        tree = etree.parse("xml/output.xml")
-        root = tree.getroot()
-        updated_patient = root.find(".//Patient[@id='1']")
-        self.assertEqual(updated_patient.find('firstname').text, 'John')
+        # Verify that the mock file content has been updated
+        expected_content = """<?xml version='1.0' encoding='UTF-8'?>
+                            <root>
+                              <Patient id="1">
+                                <firstname>John</firstname>
+                                <lastname>James</lastname>
+                                <Age>12</Age>
+                                <Gender>Male</Gender>
+                              </Patient>
+                            </root>"""
+        with open("xml/output.xml", "r") as f:
+            actual_content = f.read()
+        self.assertEqual(actual_content, expected_content)
 
     def test_update_patient_last(self):
         # Test updating the last name of a patient
@@ -71,11 +75,19 @@ class TestDataHRS(unittest.TestCase):
         with patch('builtins.input', side_effect=['1', 'Doe', 'stop']):
             self.data_hrs.update_patient_last()
 
-        # Verify that the XML file has been updated
-        tree = etree.parse("xml/output.xml")
-        root = tree.getroot()
-        updated_patient = root.find(".//Patient[@id='1']")
-        self.assertEqual(updated_patient.find('lastname').text, 'Doe')
+        # Verify that the mock file content has been updated
+        expected_content = """<?xml version='1.0' encoding='UTF-8'?>
+                            <root>
+                              <Patient id="1">
+                                <firstname>Brian</firstname>
+                                <lastname>Doe</lastname>
+                                <Age>12</Age>
+                                <Gender>Male</Gender>
+                              </Patient>
+                            </root>"""
+        with open("xml/output.xml", "r") as f:
+            actual_content = f.read()
+        self.assertEqual(actual_content, expected_content)
 
-    if __name__ == '__main__':
-        unittest.main()
+if __name__ == '__main__':
+    unittest.main()
