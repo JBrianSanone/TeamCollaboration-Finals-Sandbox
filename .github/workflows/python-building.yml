@@ -1,4 +1,4 @@
-name: Archive and Push Artifacts
+name: Manage Artifacts
 
 on:
   workflow_run:
@@ -41,7 +41,7 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-        name: ${{ github.run_id }}-archive-${{ needs.build.outputs.ARTIFACT_NAME }}
+        name: ${{ github.run_id }}-archive-${{ needs.archive.outputs.ARTIFACT_NAME }}
         path: artifacts/
 
     - name: Commit and push artifacts
