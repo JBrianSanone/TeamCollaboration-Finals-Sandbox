@@ -1,4 +1,4 @@
-name: Manage Artifacts
+name: Build and Archive Artifact
 
 on:
   workflow_run:
@@ -12,56 +12,19 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v2
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v2
       with:
         python-version: 3.12
 
     - name: Set artifact name
       id: set_artifact_name
-      run: |
-        echo "Creating artifact..."
-        echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}"
-        echo "Content of artifact folder:"
-        ls -R
-        echo "::set-output name=ARTIFACT_NAME::finals-art-${{ github.run_number }}"
+      run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
       
     - name: Archive artifact
-      id: upload-artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ steps.set_artifact_name.outputs.ARTIFACT_NAME }}
-        path: ./artifact
-
-  upload:
-    runs-on: ubuntu-latest
-
-    needs: archive
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: List artifacts before download
-      run: ls -R
-
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: ${{ needs.archive.outputs.ARTIFACT_NAME }}
-        path: ./downloaded-artifacts
-
-    - name: List downloaded artifacts
-      run: ls -R ./downloaded-artifacts
-
-    - name: Commit and push artifacts
-      run: |
-        git config user.email "2222076@slu.edu.ph"
-        git config user.name "JUNE BRIAN SANONE"
-        git add .
-        git commit -m "Deploy artifact: ${{ needs.archive.outputs.ARTIFACT_NAME }}"
-        git remote set-url origin "https://github.com/${{ github.repository }}.git"
-        git push origin main
-
+        name: ${{ env.ARTIFACT_NAME }}
+        path: src/
