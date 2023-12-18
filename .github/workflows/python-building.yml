@@ -33,6 +33,9 @@ jobs:
 
     - name: Display artifact name
       run: echo "Artifact name is ${{ env.ARTIFACT_NAME }}"
+  
+    outputs:
+      artifactName: ${{ steps.set_artifact_name.outputs.ARTIFACT_NAME }}
 
   download:
     name: Download artifact for testing
@@ -40,6 +43,9 @@ jobs:
     needs: archive
 
     steps:
+    - name: Wait for archive job completion
+      run: echo "Waiting for the archive job to complete"
+
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -48,21 +54,17 @@ jobs:
       with:
         python-version: 3.12
 
-    - name: Wait for artifacts to be available
-      run: sleep 10s
-
-
     - name: Set artifact name for download
       id: set_artifact_name_download
-      run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
+      run: echo "ARTIFACT_NAME=${{ needs.archive.outputs.artifactName }}" >> $GITHUB_ENV
 
     - name: Display artifact name for download
-      run: echo "Artifact name for download is ${{ env.ARTIFACT_NAME }}"
+      run: echo "Artifact name for download is ${{ needs.archive.outputs.artifactName }}"
 
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
-        name: ${{ env.ARTIFACT_NAME }}
+        name: ${{ needs.archive.outputs.artifactName }}
         path: src/
 
     - name: Test artifact
