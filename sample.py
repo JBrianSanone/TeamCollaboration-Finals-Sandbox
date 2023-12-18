@@ -15,7 +15,7 @@ def add_shopping_list(item):
     print("The current shopping list is: ", end=" ")
     print(", ".join(shopping_list))
 
-
+# Add shopping list
 add_shopping_list("bananas")
 
 
