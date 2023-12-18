@@ -23,14 +23,14 @@ jobs:
     - name: Set artifact name
       id: set_artifact_name
       run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
-      
+
     - name: Archive artifact
       id: archive
       uses: actions/upload-artifact@v2
       with:
         name: ${{ env.ARTIFACT_NAME }}
         path: src/
-   
+
     - name: Display artifact name
       run: echo "Artifact name is ${{ env.ARTIFACT_NAME }}"
 
@@ -48,10 +48,13 @@ jobs:
       with:
         python-version: 3.12
 
-    - name: Set artifact name
+    - name: Set artifact name for download
       id: set_artifact_name_download
       run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
-        
+
+    - name: Display artifact name for download
+      run: echo "Artifact name for download is ${{ env.ARTIFACT_NAME }}"
+
     - name: Download artifact
       uses: actions/download-artifact@v4
       with:
@@ -60,4 +63,3 @@ jobs:
 
     - name: Test artifact
       run: ls -R src/
-      
