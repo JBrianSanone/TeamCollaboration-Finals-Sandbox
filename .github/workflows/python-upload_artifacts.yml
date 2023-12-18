@@ -17,11 +17,13 @@ jobs:
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-        name: ${{ needs.build.outputs.ARTIFACT_NAME }}
+        name: ${{ env.ARTIFACT_NAME }}
         path: artifacts/
       
     - name: Commit and push artifacts
       run: |
+        git config user.email "2222076@slu.edu.ph"
+        git config user.name "JUNE BRIAN SANONE"
         git add .
         git commit -m "Deploy artifact: ${{ env.ARTIFACT_NAME }}"
         git push origin main
