@@ -1,13 +1,14 @@
-name: Build and Archive Artifact
+name: 2. Archive and Download Artifacts
 
 on:
   workflow_run:
-    workflows: ["Python Testing"]
+    workflows: ["1. Test Project"]
     types:
       - completed
 
 jobs:
   archive:
+    name: Archive into artifact
     runs-on: ubuntu-latest
 
     steps:
@@ -22,9 +23,49 @@ jobs:
     - name: Set artifact name
       id: set_artifact_name
       run: echo "ARTIFACT_NAME=finals-art-${{ github.run_number }}" >> $GITHUB_ENV
-      
+
     - name: Archive artifact
+      id: archive
       uses: actions/upload-artifact@v2
       with:
         name: ${{ env.ARTIFACT_NAME }}
         path: src/
+
+    - name: Display artifact name
+      run: echo "Artifact name is ${{ env.ARTIFACT_NAME }}"
+  
+    outputs:
+      artifactName: ${{ steps.set_artifact_name.outputs.ARTIFACT_NAME }}
+
+  download:
+    name: Download artifact for testing
+    runs-on: ubuntu-latest
+    needs: archive
+
+    steps:
+    - name: Wait for archive job completion
+      run: echo "Waiting for the archive job to complete"
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.12
+
+    - name: Set artifact name for download
+      id: set_artifact_name_download
+      run: echo "ARTIFACT_NAME=${{ needs.archive.outputs.artifactName }}" >> $GITHUB_ENV
+
+    - name: Display artifact name for download
+      run: echo "Artifact name for download is ${{ needs.archive.outputs.artifactName }}"
+
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ env.artifactName }}
+        path: src/
+
+    - name: Test artifact
+      run: ls -R src/

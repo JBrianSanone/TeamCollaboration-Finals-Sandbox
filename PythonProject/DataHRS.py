@@ -2,6 +2,7 @@ from lxml import etree
 
 
 class DataHRS:
+
     global tree
     tree = etree.parse("xml/output.xml")
 
@@ -61,11 +62,14 @@ class DataHRS:
         print()
         input("Press Enter to continue...")
 
+
         tree.write('xml/output.xml', encoding="utf-8", pretty_print=True, xml_declaration=True)
+
 
     def search_user(self):  # Search function
         while True:
             id_no = input('Enter ID Number of Patient (Enter stop to exit): ')
+
 
             if id_no.lower() == 'stop': break  # exits the loop if you enter stop
 
