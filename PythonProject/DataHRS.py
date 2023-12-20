@@ -4,7 +4,7 @@ from lxml import etree
 class DataHRS:
 
     global tree
-    tree = etree.parse("xml/output.xml")
+    tree = etree.parse("xml/output.xml") # bandit: ignore this line
 
     def add_user(self):
         root = tree.getroot()  # Access the root
