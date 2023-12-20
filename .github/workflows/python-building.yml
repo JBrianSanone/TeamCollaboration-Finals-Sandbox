@@ -29,7 +29,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ env.ARTIFACT_NAME }}
-        path: src/
+        path: PythonProject/
 
     - name: Display artifact name
       run: echo "Artifact name is ${{ env.ARTIFACT_NAME }}"
@@ -65,7 +65,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: ${{ env.artifactName }}
-        path: src/
+        path: PythonProject/
 
     - name: Test artifact
-      run: ls -R src/
+      run: ls -R PythonProject/
