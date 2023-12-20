@@ -22,4 +22,4 @@ IT311 - 9480 Applications Development Finals Project
 > 4. Inline comments should have 5 to 8 words –limited to describing function abilities
 
 ### TaskList Test
--[ ] Task 1
+- [ ] Task 1
